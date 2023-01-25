@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         cameraProviderFuture.addListener({
 
-            val cameraProvider = cameraProviderFuture.get()
+            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
             bindPreview(cameraProvider = cameraProvider)
 
         }, ContextCompat.getMainExecutor(this))
@@ -87,6 +87,7 @@ class MainActivity : AppCompatActivity() {
                     .process(processImage)
                     .addOnSuccessListener { objects ->
                         for (i in objects) {
+
                         }
                         imageProxy.close()
                     }.addOnFailureListener {
@@ -96,11 +97,10 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
-        //})
-        cameraProvider.bindToLifecycle(this as LifecycleOwner,
-            cameraSelector,
-            imageAnalysis,
-            preview)
+
 
     }
 }
+
+
+
