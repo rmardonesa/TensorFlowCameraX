@@ -1,20 +1,14 @@
 package com.fablab.tensorflowcamerax
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.content.pm.PackageManager
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.Size
-import android.widget.Toast
-import androidx.camera.core.CameraProvider
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
@@ -26,7 +20,6 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.objects.ObjectDetection
 import com.google.mlkit.vision.objects.ObjectDetector
 import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions
-import java.util.concurrent.CompletableFuture
 
 class MainActivity : AppCompatActivity() {
 
@@ -49,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         }, ContextCompat.getMainExecutor(this))
 
         val localModel = LocalModel.Builder()
-            .setAbsoluteFilePath("object_detection.tflite")
+            .setAbsoluteFilePath("//assets/object_detection.tflite")
             .build()
 
         val customObjectDetectorOptions = CustomObjectDetectorOptions.Builder(localModel)
@@ -79,8 +72,8 @@ class MainActivity : AppCompatActivity() {
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .build()
 
-        imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(this),
-        { imageProxy ->
+        imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(this)
+        ) { imageProxy ->
             val rotationDegreesValue = imageProxy.imageInfo.rotationDegrees
 
             val image = imageProxy.image
@@ -94,23 +87,27 @@ class MainActivity : AppCompatActivity() {
                     .addOnSuccessListener { objects ->
                         for (i in objects) {
 
-                            if (binding.parentLayout.childCount > 1) binding.parentLayout.removeViewAt(1)
+                            if (binding.parentLayout.childCount > 1) binding.parentLayout.removeViewAt(
+                                1
+                            )
 
-                            val element = Draw(context = this,
+                            val element = Draw(
+                                context = this,
                                 rect = i.boundingBox,
-                                text = i.labels.firstOrNull()?.text ?:"Undefined")
+                                text = i.labels.firstOrNull()?.text ?: "Undefined"
+                            )
 
                             binding.parentLayout.addView(element)
 
                         }
                         imageProxy.close()
                     }.addOnFailureListener {
-                        Log.v("MainActivity","Error - ${it.message}")
+                        Log.v("MainActivity", "Error - ${it.message}")
                         imageProxy.close()
                     }
 
             }
-        })
+        }
 
         cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, imageAnalysis, preview)
 
