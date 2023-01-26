@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import com.fablab.tensorflowcamerax.databinding.ActivityMainBinding
+import com.fablab.tensorflowcamerax.utils.Draw
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.mlkit.common.model.LocalModel
 import com.google.mlkit.vision.common.InputImage
@@ -58,7 +59,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     @SuppressLint("UnsafeOptInUsageError")
-    private fun bindPreview (cameraProvider: CameraProvider) {
+    private fun bindPreview (cameraProvider: ProcessCameraProvider) {
 
         val preview = Preview.Builder().build()
 
@@ -73,8 +74,8 @@ class MainActivity : AppCompatActivity() {
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .build()
 
-        imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(this)
-        ) { imageProxy ->
+        imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(this))
+            { imageProxy ->
             val rotationDegreesValue = imageProxy.imageInfo.rotationDegrees
 
             val image = imageProxy.image
@@ -88,6 +89,15 @@ class MainActivity : AppCompatActivity() {
                     .addOnSuccessListener { objects ->
                         for (i in objects) {
 
+                            if (binding.parentLayout.childCount > 1)
+                                binding.parentLayout.removeViewAt(1)
+
+                            val element = Draw(context = this,
+                                rect = i.boundingBox,
+                                text = i.labels.firstOrNull()?.text?:"Undefined")
+
+                            binding.parentLayout.addView(element)
+
                         }
                         imageProxy.close()
                     }.addOnFailureListener {
@@ -98,6 +108,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, imageAnalysis, preview)
 
     }
 }
