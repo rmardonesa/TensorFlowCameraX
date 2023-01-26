@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         cameraProviderFuture.addListener({
 
-            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+            val cameraProvider = cameraProviderFuture.get()
             bindPreview(cameraProvider = cameraProvider)
 
         }, ContextCompat.getMainExecutor(this))
