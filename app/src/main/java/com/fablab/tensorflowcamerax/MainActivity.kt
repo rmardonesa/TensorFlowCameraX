@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         }, ContextCompat.getMainExecutor(this))
 
         val localModel = LocalModel.Builder()
-            .setAbsoluteFilePath("object_detection.tflite")
+            .setAssetFilePath("object_detection.tflite")
             .build()
 
         val customObjectDetectorOptions = CustomObjectDetectorOptions.Builder(localModel)
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         preview.setSurfaceProvider(binding.previewView.surfaceProvider)
 
         val imageAnalysis = ImageAnalysis.Builder()
-            .setTargetResolution(Size(1280,720))
+            .setTargetResolution(Size(720,1280))
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .build()
 
@@ -78,14 +78,12 @@ class MainActivity : AppCompatActivity() {
             val rotationDegrees = imageProxy.imageInfo.rotationDegrees
             val image = imageProxy.image
             if (image != null) {
-
                 val processImage = InputImage.fromMediaImage(image, rotationDegrees)
-
                 objectDetector
                     .process(processImage)
                     .addOnSuccessListener { objects ->
                         for (detectedObjects in objects) {
-                            if (binding.parentLayout.childCount > 1) binding.parentLayout.removeViewAt(1)
+                            if (binding.parentLayout.childCount >1) binding.parentLayout.removeViewAt(1)
                             val element = Draw(context = this,
                                 rect = detectedObjects.boundingBox,
                                 text = detectedObjects.labels.firstOrNull()?.text ?: "Undefined")

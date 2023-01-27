@@ -26,7 +26,7 @@ class Draw(context: Context?, var rect: Rect, var text: String): View(context) {
 
         textPaint = Paint()
         textPaint.color = Color.BLACK
-        textPaint.textSize = 50f
+        textPaint.textSize = 30f
         textPaint.style = Paint.Style.FILL
     }
 
