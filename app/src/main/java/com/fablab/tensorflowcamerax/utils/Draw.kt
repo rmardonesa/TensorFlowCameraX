@@ -1,5 +1,6 @@
 package com.fablab.tensorflowcamerax.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -7,7 +8,9 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.view.View
 
+@SuppressLint("ViewConstructor")
 class Draw(context: Context?, var rect: Rect, var text: String): View(context) {
+
 
     lateinit var boundaryPaint: Paint
     lateinit var textPaint: Paint
