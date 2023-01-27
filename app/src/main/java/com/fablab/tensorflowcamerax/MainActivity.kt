@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity() {
 
         val localModel = LocalModel.Builder()
             .setAbsoluteFilePath("object_detection.tflite")
-                //  \\assets\object_detection.tflite
             .build()
 
         val customObjectDetectorOptions = CustomObjectDetectorOptions.Builder(localModel)
@@ -57,7 +56,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    @Suppress("MoveLambdaOutsideParentheses")
+
     @SuppressLint("UnsafeOptInUsageError")
     private fun bindPreview (cameraProvider: ProcessCameraProvider) {
 
@@ -74,11 +73,10 @@ class MainActivity : AppCompatActivity() {
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .build()
 
+        @Suppress("MoveLambdaOutsideParentheses")
         imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(this), { imageProxy ->
             val rotationDegrees = imageProxy.imageInfo.rotationDegrees
-
             val image = imageProxy.image
-
             if (image != null) {
 
                 val processImage = InputImage.fromMediaImage(image, rotationDegrees)
@@ -88,13 +86,10 @@ class MainActivity : AppCompatActivity() {
                     .addOnSuccessListener { objects ->
                         for (detectedObjects in objects) {
                             if (binding.parentLayout.childCount > 1) binding.parentLayout.removeViewAt(1)
-
-                            val element = Draw(
-                                context = this,
+                            val element = Draw(context = this,
                                 rect = detectedObjects.boundingBox,
-                                text = detectedObjects.labels.firstOrNull()?.text ?: "Undefined"
-                            )
-                            binding.parentLayout.addView(element)
+                                text = detectedObjects.labels.firstOrNull()?.text ?: "Undefined")
+                            binding.parentLayout.addView(element,1)
 
                         }
                         imageProxy.close()
