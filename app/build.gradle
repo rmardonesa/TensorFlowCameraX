@@ -62,7 +62,7 @@ dependencies {
      */
 
     // Object detection
-    implementation 'com.google.mlkit:object-detection-custom:17.0.0'
+    implementation 'com.google.mlkit:object-detection-custom:16.3.0'
     //implementation 'com.google.mlkit:object-detection-custom:16.3.0'
 
     // CameraX

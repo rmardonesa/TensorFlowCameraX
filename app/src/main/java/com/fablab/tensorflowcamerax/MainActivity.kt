@@ -86,16 +86,12 @@ class MainActivity : AppCompatActivity() {
                 objectDetector
                     .process(processImage)
                     .addOnSuccessListener { objects ->
-                        for (i in objects) {
-
+                        for (detectedObjects in objects) {
                             if (binding.parentLayout.childCount > 1) binding.parentLayout.removeViewAt(1)
-
-                            //val context = binding.root.context
-
                             val element = Draw(
                                 context = this,
-                                rect = i.boundingBox,
-                                text = i.labels.firstOrNull()?.text ?: "Undefined"
+                                rect = detectedObjects.boundingBox,
+                                text = detectedObjects.labels.firstOrNull()?.text ?: "Undefined"
                             )
 
                             binding.parentLayout.addView(element)
