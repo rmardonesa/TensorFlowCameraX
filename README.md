@@ -4,7 +4,7 @@ TensorFlow Lite implementation with realtime CameraX native hardware access
 
 ### Our app: 
 This software can access to native Android resources and functionally do the following tasks
-- Open camera
+- Access camera
 - Image analysis
 - Preview
 - Object detection
