@@ -11,7 +11,6 @@ import android.view.View
 @SuppressLint("ViewConstructor")
 class Draw(context: Context?, var rect: Rect, var text: String): View(context) {
 
-
     lateinit var boundaryPaint: Paint
     lateinit var textPaint: Paint
 
