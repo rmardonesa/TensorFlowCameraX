@@ -38,9 +38,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         if (allPermissionsGranted()) {
-            Toast.makeText(this,
-                "Initializing TensorFlow",
-                Toast.LENGTH_SHORT).show()
+
         } else {
             ActivityCompat.requestPermissions(
                 this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
@@ -146,9 +144,6 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (allPermissionsGranted()) {
-                Toast.makeText(this,
-                    "Permissions granted",
-                    Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this,
                     "Permissions not granted by the user.",
@@ -157,9 +152,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         if (allPermissionsGranted()) {
-            Toast.makeText(this,
-                "Permissions granted",
-                Toast.LENGTH_SHORT).show()
+
         }else {
             Toast.makeText(this,
                 "Permissions not granted by the user.",
