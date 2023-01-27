@@ -32,20 +32,8 @@ class Draw(context: Context?, var rect: Rect, var text: String): View(context) {
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-
-        canvas?.drawText(
-            text,
-            rect.centerX().toFloat(),
-            rect.centerY().toFloat(),
-            textPaint)
-
-        canvas?.drawRect(
-            rect.left.toFloat(),
-            rect.top.toFloat(),
-            rect.right.toFloat(),
-            rect.bottom.toFloat(),
-            boundaryPaint
-        )
+        canvas?.drawText(text, rect.centerX().toFloat(), rect.centerY().toFloat(),textPaint)
+        canvas?.drawRect(rect.left.toFloat(), rect.top.toFloat(), rect.right.toFloat(), rect.bottom.toFloat(),boundaryPaint)
     }
 
 

@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    @Suppress("MoveLambdaOutsideParentheses")
     @SuppressLint("UnsafeOptInUsageError")
     private fun bindPreview (cameraProvider: ProcessCameraProvider) {
 
@@ -73,8 +74,7 @@ class MainActivity : AppCompatActivity() {
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .build()
 
-        imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(this)
-        ) { imageProxy ->
+        imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(this), { imageProxy ->
             val rotationDegrees = imageProxy.imageInfo.rotationDegrees
 
             val image = imageProxy.image
@@ -104,9 +104,11 @@ class MainActivity : AppCompatActivity() {
                     }
 
             }
-        }
+        })
 
         cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, imageAnalysis, preview)
+
+        // cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, imageAnalysis, preview)
 
     }
 
