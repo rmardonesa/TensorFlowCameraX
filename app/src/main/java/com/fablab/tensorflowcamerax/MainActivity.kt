@@ -75,25 +75,25 @@ class MainActivity : AppCompatActivity() {
 
         imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(this)
         ) { imageProxy ->
-            val rotationDegreesValue = imageProxy.imageInfo.rotationDegrees
+            val rotationDegrees = imageProxy.imageInfo.rotationDegrees
 
             val image = imageProxy.image
 
             if (image != null) {
 
-                val processImage = InputImage.fromMediaImage(image, rotationDegreesValue)
+                val processImage = InputImage.fromMediaImage(image, rotationDegrees)
 
                 objectDetector
                     .process(processImage)
                     .addOnSuccessListener { objects ->
                         for (detectedObjects in objects) {
                             if (binding.parentLayout.childCount > 1) binding.parentLayout.removeViewAt(1)
+
                             val element = Draw(
                                 context = this,
                                 rect = detectedObjects.boundingBox,
                                 text = detectedObjects.labels.firstOrNull()?.text ?: "Undefined"
                             )
-
                             binding.parentLayout.addView(element)
 
                         }
