@@ -20,13 +20,13 @@ class Draw(context: Context?, var rect: Rect, var text: String): View(context) {
 
     private fun init(){
         boundaryPaint = Paint()
-        boundaryPaint.color = Color.BLACK
-        boundaryPaint.strokeWidth = 10f
+        boundaryPaint.color = Color.RED
+        boundaryPaint.strokeWidth = 20f
         boundaryPaint.style = Paint.Style.STROKE
 
         textPaint = Paint()
-        textPaint.color = Color.BLACK
-        textPaint.textSize = 30f
+        textPaint.color = Color.RED
+        textPaint.textSize = 50f
         textPaint.style = Paint.Style.FILL
     }
 
