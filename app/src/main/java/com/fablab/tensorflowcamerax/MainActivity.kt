@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, preview, imageAnalysis)
+        cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, imageAnalysis, preview)
 
     }
 
