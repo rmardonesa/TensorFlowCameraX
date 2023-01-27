@@ -42,7 +42,8 @@ class MainActivity : AppCompatActivity() {
         }, ContextCompat.getMainExecutor(this))
 
         val localModel = LocalModel.Builder()
-            .setAbsoluteFilePath("//assets/object_detection.tflite")
+            .setAbsoluteFilePath("object_detection.tflite")
+                //  \\assets\object_detection.tflite
             .build()
 
         val customObjectDetectorOptions = CustomObjectDetectorOptions.Builder(localModel)
@@ -87,9 +88,9 @@ class MainActivity : AppCompatActivity() {
                     .addOnSuccessListener { objects ->
                         for (i in objects) {
 
-                            if (binding.parentLayout.childCount > 1) binding.parentLayout.removeViewAt(
-                                1
-                            )
+                            if (binding.parentLayout.childCount > 1) binding.parentLayout.removeViewAt(1)
+
+                            //val context = binding.root.context
 
                             val element = Draw(
                                 context = this,
@@ -109,7 +110,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, imageAnalysis, preview)
+        cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, preview, imageAnalysis)
 
     }
 
