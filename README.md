@@ -1,4 +1,4 @@
-# Vision Artificial with custom Object Detection Model
+# Vision Artificial custom Object Detection TF Lite Model
 
 TensorFlow Lite implementation with realtime CameraX native hardware access
 
