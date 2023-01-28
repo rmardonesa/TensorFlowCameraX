@@ -1,4 +1,4 @@
-# Vision Artificial custom Object Detection TFLite Model
+# Vision Artificial custom Object Detection Model
 
 TensorFlow Lite implementation with realtime CameraX native hardware access
 
